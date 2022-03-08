@@ -1,0 +1,9 @@
+#/usr/bin/env bash
+_cclient_wrapper_sh_comp() {
+    (( COMP_CWORD > 1 )) && return
+    full_completions="logout login start-bg restart-bg stop status connected help"
+    (( COMP_CWORD > 0 )) && for i in {$full_completions}; do [ "${COMP_WORDS[$COMP_CWORD]}" = "$i" ] && return; done;
+    COMPREPLY=( $(compgen -W "start restart $full_completions" "$2") )
+}
+
+complete -o nospace -F _cclient_wrapper_sh_comp cclient_wrapper.sh
